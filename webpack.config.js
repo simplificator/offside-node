@@ -8,7 +8,8 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.ls$/, loader: "livescript" }
+      { test: /\.ls$/, loader: "livescript" },
+      { test: /\.scss$/, loaders: ["style", "css", "sass"] }
     ]
   }
 }

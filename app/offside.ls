@@ -3,13 +3,17 @@ ReactDOM = require \react-dom
 Rx = require \rx
 RxDOM = require \rx-dom
 
-{ h1, div, ul, li } = React.DOM
+require "./style.scss"
+
+{ h1, div, ul, li, img } = React.DOM
 
 player-selector = ({ players }) ->
   if players
-    ul {},
+    ul { className: "player-chooser" },
       players.map (p) ->
-        li {}, p.name
+        li {},
+          div {},
+            img { src:p.image_url }
   else
     div {}, "loading players"
 
@@ -25,7 +29,7 @@ getPlayers = do
   Rx.DOM
     .ajax "/players"
     .subscribe ({ response }) ->
-      players = JSON.parse response
+      players = (JSON.parse response).filter (p) -> p.image_url
       ReactDOM.render (ui { players }), (document.get-element-by-id \offside)
 
 
