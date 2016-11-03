@@ -22,24 +22,24 @@ player-chooser = ({ players }) ->
     div {}, "loading players"
 
 
-start-match-ui = ({ player1, player2, player3, player4 }) ->
+start-match-ui = ({ slot1, slot2, slot3, slot4 }) ->
   div { className: "start-match-ui" },
     div {},
-      div { id: "player1", class-name: "player" },
-        img { src:player1.image_url } if player1
-      div { id: "player2", class-name: "player" },
-        img { src:player2.image_url } if player2
+      div { id: "slot1", class-name: "slot" },
+        img { src:slot1.image_url } if slot1
+      div { id: "slot2", class-name: "slot" },
+        img { src:slot2.image_url } if slot2
     div {},
-      div { id: "player3", class-name: "player" },
-        img { src:player3.image_url } if player3
-      div { id: "player4", class-name: "player" },
-        img { src:player4.image_url } if player4
+      div { id: "slot3", class-name: "slot" },
+        img { src:slot3.image_url } if slot3
+      div { id: "slot4", class-name: "slot" },
+        img { src:slot4.image_url } if slot4
 
 
-ui = ({ players, player1, player2, player3, player4 }) ->
+ui = ({ players, slot1, slot2, slot3, slot4 }) ->
   div {},
     h1 {}, "offside"
-    start-match-ui { player1, player2, player3, player4 }
+    start-match-ui { slot1, slot2, slot3, slot4 }
     player-chooser { players }
 
 
@@ -48,20 +48,21 @@ ui = ({ players, player1, player2, player3, player4 }) ->
 
 game-state =
   players: []
-  player1: undefined
-  player2: undefined
-  player3: undefined
-  player4: undefined
+  slot1: undefined
+  slot2: undefined
+  slot3: undefined
+  slot4: undefined
 
 
 update-state = (state, [action, params]) ->
+  console.log action, params
   switch action
     case \get-players
       state.players = params
       state
     case \set-player
-      [player_id, target] = params
-      state[target] = state.players.find (p) -> p.id == +player_id
+      [player, slot] = params
+      state[slot.id] = state.players.find (p) -> p.id == +player.id
       state
     default state
 
@@ -76,9 +77,14 @@ set-player = mouse-down
     mouse-up
       .take-until mouse-up
       .map (up-e) ->
-        [down-e.target.id, up-e.target.id]
+        slot = if up-e.target.class-name == "slot"
+          up-e.target
+        else
+          up-e.target.parent-element
+
+        [down-e.target, slot]
   .filter ([player, target]) ->
-    target
+    target.class-name == "slot"
   .map (params) ->
     [\set-player, params]
 
@@ -95,9 +101,6 @@ get-players = do
 
 Rx.Observable.merge [get-players, set-player]
   .scan update-state, game-state
-  .do -> console.log arguments
+  .do -> console.table arguments
   .subscribe (state) ->
     React-DOM.render (ui state), (document.get-element-by-id \offside)
-
-
-# React-DOM.render (ui {}), (document.get-element-by-id \offside)
