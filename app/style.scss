@@ -2,27 +2,49 @@
   margin: 0;
   padding: 0;
   user-select: none;
+  font-family: sans-serif;
+}
+
+html {
+  width: 100%;
+  height: 100%;
+  background-color: #068406;
+  box-shadow: inset 0 0 163px 57px rgba(0, 0, 0, 0.2);
+}
+
+.offside-main {
+  display: flex;
+  flex-direction: column;
 }
 
 .player-chooser {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  li {
+  div {
     display: inline-block;
     margin: 10px;
   }
 
   img {
-    border-radius: 40px;
+    border-radius: 45px;
     width: 80px;
     height: 80px;
-    border: 3px solid #dadada;
+    border: 2px solid #dadada;
+    opacity: 0.4;
+  }
+
+  img.selectable-player {
+    opacity: 1;
   }
 }
 
 .start-match-ui {
+  display: flex;
+  width: 100%;
+
+  > div {
+    flex: 1;
+    text-align: center;
+  }
+
   .slot {
     display: flex;
     align-items: center;
@@ -30,9 +52,21 @@
 
     width: 100px;
     height: 100px;
+    margin: 30px auto;
 
-    border-radius: 50px;
+    font-size: 30pt;
+    color: white;
+
+    border-radius: 60px;
     border: 3px solid #dadada;
+  }
+
+  .red > .slot {
+    background-color: #f1272d;
+  }
+
+  .blue > .slot {
+    background-color: #1a73b1;
   }
 
   img {
@@ -40,5 +74,23 @@
     width: 100px;
     height: 100px;
     border: 3px solid #dadada;
+  }
+}
+
+.game-buttons {
+  text-align: center;
+
+  a {
+    color: white;
+    padding: 10px 5px;
+    margin: 20px;
+    border: 1px white solid;
+    border-radius: 10px;
+    opacity: 0.6;
+  }
+
+  a.active {
+    opacity: 1;
+    border: 2px white solid;
   }
 }
