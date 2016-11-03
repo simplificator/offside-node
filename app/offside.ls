@@ -1,9 +1,32 @@
 React = require \react
 ReactDOM = require \react-dom
+Rx = require \rx
+RxDOM = require \rx-dom
 
-{ h1 } = React.DOM
+{ h1, div, ul, li } = React.DOM
 
-ui = ->
-  h1 {}, "this will be great"
+player-selector = ({ players }) ->
+  if players
+    ul {},
+      players.map (p) ->
+        li {}, p.name
+  else
+    div {}, "loading players"
 
-ReactDOM.render (ui {}), document.body
+
+ui = ({ players }) ->
+  div {},
+    h1 {}, "offside"
+    div {},
+      player-selector { players }
+
+
+getPlayers = do
+  Rx.DOM
+    .ajax "/players"
+    .subscribe ({ response }) ->
+      players = JSON.parse response
+      ReactDOM.render (ui { players }), (document.get-element-by-id \offside)
+
+
+ReactDOM.render (ui {}), (document.get-element-by-id \offside)
