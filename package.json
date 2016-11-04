@@ -4,7 +4,7 @@
   "description": "New new kicker app in node",
   "main": "index.js",
   "scripts": {
-    "postinstall":   "webpack && lsc -c server/server.ls", 
+    "postinstall":   "webpack && lsc -c server/server.ls && lsc -c server/players.ls",
     "start": "node server/server.js"
   },
   "repository": {
