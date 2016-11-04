@@ -25,7 +25,7 @@ start-match-ui = ({ slot1, slot2, slot3, slot4 }) ->
 game-buttons = ({ slots }) ->
   class-name = "active" if (slots.filter (x) -> x).length == 4
   div { class-name: "game-buttons" },
-    a { class-name }, "Start Game"
+    a { id: "start-game", class-name }, "Start Game"
     a { class-name }, "Shuffle Teams"
 
 

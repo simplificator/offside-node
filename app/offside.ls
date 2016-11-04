@@ -1,6 +1,7 @@
 React-DOM = require \react-dom
 Rx = require \rx
 Rx-DOM = require \rx-dom
+io = require "socket.io-client"
 
 match-maker-ui = require "./components/match-maker/ui.ls"
 
@@ -10,6 +11,11 @@ game-state =
   slot2: undefined
   slot3: undefined
   slot4: undefined
+
+
+socket = io!
+socket.on "goal", ->
+  console.log "GOOOOOOOOOOOAAAAAAAAAAAAAAAAAAL"
 
 
 update-state = (state, [action, params]) ->
@@ -33,6 +39,15 @@ update-state = (state, [action, params]) ->
 find-available-slot = (state) ->
   "slot" + [1 to 4].find (i) ->
     !state["slot#{i}"]
+
+
+
+start-game = Rx.Observable
+  .from-event document.body, \mousedown
+  .filter (e) ->
+    e.target.id == "start-game"
+  .map (e) ->
+    [\start-game]
 
 
 set-player = Rx.Observable
@@ -63,7 +78,7 @@ get-players = do
       [\get-players, (JSON.parse response).filter (p) -> p.image_url]
 
 
-Rx.Observable.merge [get-players, set-player, free-slot]
+Rx.Observable.merge [get-players, set-player, free-slot, start-game]
   .do (x) -> console.log x
   .scan update-state, game-state
   .subscribe (state) ->
