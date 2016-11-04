@@ -4,6 +4,8 @@ app = express!
 http = (require "http").Server app
 io = (require "socket.io") http
 
+port = Number (process.env.PORT || 3000)
+
 players = require "./players.js"
 
 app.use express.static \app
@@ -26,5 +28,5 @@ io.on "connection", (socket) ->
   socket.on "disconnect", ->
     console.log "user disconnected"
 
-http.listen 3000, ->
-  console.log "offside server listening on port 3000"
+http.listen port, ->
+  console.log "offside server listening on port #{port}"

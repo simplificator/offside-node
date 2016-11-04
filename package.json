@@ -4,7 +4,8 @@
   "description": "New new kicker app in node",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && lsc -c server/server.ls && node server/server.js"
+    "postinstall":   "webpack && lsc -c server/server.ls", 
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
@@ -34,5 +35,8 @@
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "webpack": "^1.13.3"
+  },
+  "engines": {
+    "node": "6.6.0"
   }
 }
