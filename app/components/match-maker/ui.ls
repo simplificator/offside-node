@@ -1,12 +1,13 @@
 React = require \react
 { h1, div, ul, li, img, a } = React.DOM
 
+kicker-image = require "./field-img-white.png"
+
 require "./style.scss"
 
 
 ui = ({ players, slot1, slot2, slot3, slot4 }) ->
   div { class-name: "offside-main" },
-    h1 {}, "choose players"
     start-match-ui { slot1, slot2, slot3, slot4 }
     game-buttons { slots: [slot1, slot2, slot3, slot4] }
     player-chooser { players, selected-players: [slot1, slot2, slot3, slot4] } if players?
@@ -14,16 +15,18 @@ ui = ({ players, slot1, slot2, slot3, slot4 }) ->
 
 start-match-ui = ({ slot1, slot2, slot3, slot4 }) ->
   div { class-name: "start-match-ui" },
-    div { class-name: "blue" },
+    div { class-name: "red" },
       player-slot { name:"slot1", player:slot1, number: 1 }
       player-slot { name:"slot2", player:slot2, number: 2 }
-    div { class-name: "red" },
+    div { class-name: "field"},
+     img { src:kicker-image }
+    div { class-name: "blue" },
       player-slot { name:"slot3", player:slot3, number: 3 }
       player-slot { name:"slot4", player:slot4, number: 4 }
 
 
 game-buttons = ({ slots }) ->
-  class-name = "active" if (slots.filter (x) -> x).length == 4
+  class-name = "button #{'active' if (slots.filter (x) -> x).length == 4}"
   div { class-name: "game-buttons" },
     a { id: "start-game", class-name }, "Start Game"
     a { class-name }, "Shuffle Teams"

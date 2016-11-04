@@ -1,3 +1,5 @@
+.DS_Store
+
 server/*.js
 app/*.js
 

@@ -1,16 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  user-select: none;
-  font-family: sans-serif;
-}
-
-html {
-  width: 100%;
-  height: 100%;
-  background-color: #068406;
-  box-shadow: inset 0 0 163px 57px rgba(0, 0, 0, 0.2);
-}
 
 .offside-main {
   display: flex;
@@ -42,7 +29,12 @@ html {
 
   > div {
     flex: 1;
-    text-align: center;
+    flex-direction: column;
+    // text-align: center;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .slot {
@@ -69,7 +61,11 @@ html {
     background-color: #1a73b1;
   }
 
-  img {
+  .field > img {
+    width: 180px;
+  }
+
+  .slot > img {
     border-radius: 50px;
     width: 100px;
     height: 100px;
@@ -79,18 +75,5 @@ html {
 
 .game-buttons {
   text-align: center;
-
-  a {
-    color: white;
-    padding: 10px 5px;
-    margin: 20px;
-    border: 1px white solid;
-    border-radius: 10px;
-    opacity: 0.6;
-  }
-
-  a.active {
-    opacity: 1;
-    border: 2px white solid;
-  }
+  margin: 20px;
 }

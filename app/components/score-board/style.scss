@@ -1,0 +1,58 @@
+.score-board {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  background-color: white;
+}
+
+.red-side {
+  flex: 1;
+  background-color: #f1272d ;
+}
+
+.seperator {
+  width: 3px;
+  background-color: white;
+}
+
+.blue-side {
+  flex: 1;
+  background-color: #1a73b1 ;
+}
+
+.score-count {
+  height: 300px;
+  color: white;
+  font-size: 284px;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.score-buttons {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  text-align: center;
+
+  a {
+    margin: auto;
+  }
+}
+
+.team {
+  text-align: center;
+}
+
+img.player-icon {
+  display: block;
+  margin: 20px auto;
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  border: 3px solid #dadada;
+}

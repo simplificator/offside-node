@@ -3,7 +3,8 @@ Rx = require \rx
 Rx-DOM = require \rx-dom
 io = require "socket.io-client"
 
-match-maker-ui = require "./components/match-maker/ui.ls"
+offside-ui = require "./components/offside.ls"
+
 
 game-state =
   players: []
@@ -11,6 +12,14 @@ game-state =
   slot2: undefined
   slot3: undefined
   slot4: undefined
+  match:
+    running:false
+    red:
+      team: []
+      score: 0
+    blue:
+      team: []
+      score: 0
 
 
 socket = io!
@@ -32,6 +41,15 @@ update-state = (state, [action, params]) ->
       slot-id = params
       state[slot-id] = undefined
       state
+    case \start-game
+      state.match.red = [state.slot1, state.slot2]
+      state.match.blue = [state.slot3, state.slot4]
+      state.match.running = true
+      state
+    case \end-game
+      state.match.running = false
+      state
+
     default state
 
 
@@ -48,6 +66,14 @@ start-game = Rx.Observable
     e.target.id == "start-game"
   .map (e) ->
     [\start-game]
+
+
+# end-game = Rx.Observable
+#   .from-event (document.get-element-by-id "end-game"), \mousedown
+#   .filter (e) ->
+#     e.target.id == "end-game"
+#   .map (e) ->
+#     [\end-game]
 
 
 set-player = Rx.Observable
@@ -82,4 +108,4 @@ Rx.Observable.merge [get-players, set-player, free-slot, start-game]
   .do (x) -> console.log x
   .scan update-state, game-state
   .subscribe (state) ->
-    React-DOM.render (match-maker-ui state), (document.get-element-by-id \offside)
+    React-DOM.render (offside-ui state), (document.get-element-by-id \offside)
