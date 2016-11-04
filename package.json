@@ -4,7 +4,7 @@
   "description": "New new kicker app in node",
   "main": "index.js",
   "scripts": {
-    "postinstall":   "webpack && lsc -c server/server.ls && lsc -c server/players.ls",
+    "postinstall": "webpack && lsc -c server/server.ls && lsc -c server/players.ls",
     "start": "node server/server.js"
   },
   "repository": {
@@ -26,11 +26,13 @@
     "socket.io": "^1.5.1"
   },
   "devDependencies": {
+    "autoprefixer": "^6.5.1",
     "css-loader": "^0.25.0",
     "file-loader": "^0.9.0",
     "livescript": "^1.5.0",
     "livescript-loader": "^0.1.6",
     "node-sass": "^3.11.1",
+    "postcss-loader": "^1.1.0",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
