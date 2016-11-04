@@ -42,11 +42,20 @@ update-state = (state, [action, params]) ->
       state.match.running = true
       state
     case \goal
-      team = params
-      state.match[team].score = state.match[team].score + 1
+      if state.game.running
+        team = params
+        state.match[team].score = state.match[team].score + 1
+
       state
     case \end-game
-      state.match.running = false
+      state.match =
+        running:false
+        red:
+          team: []
+          score: 0
+        blue:
+          team: []
+          score: 0
       state
 
     default state
