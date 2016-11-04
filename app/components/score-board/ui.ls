@@ -8,12 +8,12 @@ ui = ({ red, blue }) ->
   div {},
     div { class-name: "score-board" },
       div { class-name: "red-side" },
-        score { count: 0 }
-        team { players:red }
+        score { count: red.score }
+        team { players:red.team }
       div { class-name: "seperator" }
       div { class-name: "blue-side" },
-        score { count: 0 }
-        team { players:blue }
+        score { count: blue.score }
+        team { players:blue.team }
     div { class-name: "score-buttons" },
       a { id: "end-game", class-name: "button active" }, "end game"
 

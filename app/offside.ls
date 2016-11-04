@@ -22,11 +22,6 @@ game-state =
       score: 0
 
 
-socket = io!
-socket.on "goal", ->
-  console.log "GOOOOOOOOOOOAAAAAAAAAAAAAAAAAAL"
-
-
 update-state = (state, [action, params]) ->
   switch action
     case \get-players
@@ -42,9 +37,13 @@ update-state = (state, [action, params]) ->
       state[slot-id] = undefined
       state
     case \start-game
-      state.match.red = [state.slot1, state.slot2]
-      state.match.blue = [state.slot3, state.slot4]
+      state.match.red.team = [state.slot1, state.slot2]
+      state.match.blue.team = [state.slot3, state.slot4]
       state.match.running = true
+      state
+    case \goal
+      team = params
+      state.match[team].score = state.match[team].score + 1
       state
     case \end-game
       state.match.running = false
@@ -58,6 +57,15 @@ find-available-slot = (state) ->
   "slot" + [1 to 4].find (i) ->
     !state["slot#{i}"]
 
+
+socket = io!
+
+goal = Rx.Observable
+  .from-event socket, "goal"
+  .map ({ team }) ->
+    console.log team
+    console.log arguments
+    [\goal, team]
 
 
 start-game = Rx.Observable
@@ -104,7 +112,7 @@ get-players = do
       [\get-players, (JSON.parse response).filter (p) -> p.image_url]
 
 
-Rx.Observable.merge [get-players, set-player, free-slot, start-game]
+Rx.Observable.merge [get-players, set-player, free-slot, start-game, goal]
   .do (x) -> console.log x
   .scan update-state, game-state
   .subscribe (state) ->

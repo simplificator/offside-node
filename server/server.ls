@@ -11,8 +11,12 @@ app.use express.static \app
 app.get "/players", (req, res) ->
   res.send players
 
-app.post "/goal", (req, res) ->
-  io.emit "goal"
+app.post "/blue/goal", (req, res) ->
+  io.emit "goal", team: "blue"
+  res.send-status 200
+
+app.post "/red/goal", (req, res) ->
+  io.emit "goal", team: "red"
   res.send-status 200
 
 io.on "connection", (socket) ->
