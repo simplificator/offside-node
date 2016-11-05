@@ -23,7 +23,6 @@ app.post "/red/goal", (req, res) ->
 
 io.on "connection", (socket) ->
   console.log "user connected"
-  current-socket = socket
 
   socket.on "disconnect", ->
     console.log "user disconnected"

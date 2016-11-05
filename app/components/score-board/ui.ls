@@ -1,6 +1,8 @@
 React = require \react
 { h1, div, ul, li, img, a } = React.DOM
 
+store = require "../main/store.ls"
+
 require "./style.scss"
 
 
@@ -15,7 +17,12 @@ ui = ({ red, blue }) ->
         score { count: blue.score }
         team { players:blue.team }
     div { class-name: "score-buttons" },
-      a { id: "end-game", class-name: "button active" }, "end game"
+      a { class-name: "button active", on-click: dispatch-end-game }, "end game"
+
+
+dispatch-end-game = ->
+  store.dispatch do
+    type: \end-game
 
 
 score = ({ count }) ->
