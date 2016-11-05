@@ -12,7 +12,7 @@ module.exports = {
     loaders: [
       { test: /\.ls$/, loader: "livescript" },
       { test: /\.scss$/, loaders: ["style", "css", "postcss", "sass"] },
-      { test: /\.(png|jpg|jpeg|gif|woff)$/, loader: 'url-loader' }
+      { test: /\.(png|mp3)$/, loader: 'url-loader' }
     ]
   },
   postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ]
