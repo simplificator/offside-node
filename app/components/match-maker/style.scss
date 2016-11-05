@@ -1,29 +1,9 @@
-
-.offside-main {
+.match-maker {
   display: flex;
   flex-direction: column;
 }
 
-.player-chooser {
-  div {
-    display: inline-block;
-    margin: 10px;
-  }
-
-  img {
-    border-radius: 45px;
-    width: 80px;
-    height: 80px;
-    border: 2px solid #dadada;
-    opacity: 0.4;
-  }
-
-  img.selectable-player {
-    opacity: 1;
-  }
-}
-
-.start-match-ui {
+.player-slots {
   display: flex;
   width: 100%;
 
@@ -53,11 +33,11 @@
     border: 3px solid #dadada;
   }
 
-  .red > .slot {
+  .team-red > .slot {
     background-color: #f1272d;
   }
 
-  .blue > .slot {
+  .team-blue > .slot {
     background-color: #1a73b1;
   }
 
@@ -76,4 +56,23 @@
 .game-buttons {
   text-align: center;
   margin: 20px;
+}
+
+.players-to-choose {
+  div {
+    display: inline-block;
+    margin: 10px;
+  }
+
+  img {
+    border-radius: 45px;
+    width: 80px;
+    height: 80px;
+    border: 2px solid #dadada;
+    opacity: 0.4;
+  }
+
+  img.selectable-player {
+    opacity: 1;
+  }
 }

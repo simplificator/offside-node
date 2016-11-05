@@ -2,12 +2,11 @@ React = require \react
 Rx = require \rx
 Rx-DOM = require \rx-dom
 
+store = require "../main/store.ls"
+require "./style.scss"
+
 { h1, div, ul, li, img, a } = React.DOM
 
-store = require "../main/store.ls"
-kicker-image = require "./field-img-white.png"
-
-require "./style.scss"
 
 Rx.DOM
   .ajax "/players"
@@ -17,71 +16,52 @@ Rx.DOM
       payload: (JSON.parse response).filter (p) -> p.image_url
 
 
-ui = ({ players, slot1, slot2, slot3, slot4 }) ->
-  div { class-name: "offside-main" },
-    start-match-ui { slot1, slot2, slot3, slot4 }
-    game-buttons { slots: [slot1, slot2, slot3, slot4] }
-    player-chooser { players, selected-players: [slot1, slot2, slot3, slot4] } if players?
-
-
-start-match-ui = ({ slot1, slot2, slot3, slot4 }) ->
-  div { class-name: "start-match-ui" },
-    div { class-name: "red" },
-      player-slot { id:1, player:slot1 }
-      player-slot { id:2, player:slot2 }
-    div { class-name: "field"},
-     img { src:kicker-image }
-    div { class-name: "blue" },
-      player-slot { id:3, player:slot3 }
-      player-slot { id:4, player:slot4 }
-
-
-game-buttons = ({ slots }) ->
-  class-name = "button #{'active' if (slots.filter (x) -> x).length == 4}"
-  div { class-name: "game-buttons" },
-    a { class-name, on-click: dispatch-game-start }, "Start Game"
-    a { class-name, on-click: dispatch-shuffle-players }, "Shuffle Teams"
-
-
-dispatch-game-start = ->
-  store.dispatch type: \GAME_START
-
-
-dispatch-shuffle-players = ->
-  store.dispatch type: \PLAYERS_SHUFFLE
-
-
-player-chooser = ({ players, selected-players }) ->
-  div { class-name: "player-chooser" },
-    players.map (player) ->
-      class-name = "selectable-player" unless player in selected-players
-      div { class-name: "player" },
-        img { src: player.image_url, on-click: (dispatch-select-player player), class-name }
-
-
-dispatch-select-player = (player) ->
+d = (type, payload) ->
   ->
-    store.dispatch do
-      type: \PLAYER_CHOOSE
-      payload: player.id
+    store.dispatch { type, payload }
 
 
-player-icon = ({ player, class-name }) ->
-  img { src:player.image_url, id: player.id, class-name: class-name }
+player-slots = ({ slot1, slot2, slot3, slot4 }) ->
+  div { class-name: "player-slots" },
+    div { class-name: "team-red" },
+      slot { id:1, player:slot1 }
+      slot { id:2, player:slot2 }
+    div { class-name: "field"},
+      img { src: require "./field-img-white.png" }
+    div { class-name: "team-blue" },
+      slot { id:3, player:slot3 }
+      slot { id:4, player:slot4 }
 
 
-player-slot = ({ id, player }) ->
-  div { id: name, class-name: "slot" },
+slot = ({ id, player }) ->
+  div { class-name: "slot" },
     if player
-      img { src: player.image_url, class-name: "selected-player", on-click: (dispatch-free-slot id) }
+      img { src: player.image_url, on-click: (d \SLOT_FREE, "slot#{id}") }
     else
       id
 
 
-dispatch-free-slot = (id) ->
-  ->
-    store.dispatch do
-      type: \SLOT_FREE
-      payload: "slot#{id}"
+game-buttons = ({ game-can-start }) ->
+  class-name = if game-can-start then "button active" else "button"
+  div { class-name: "game-buttons" },
+    a { class-name, on-click: d \GAME_START }, "Start Game"
+    a { class-name, on-click: d \PLAYERS_SHUFFLE }, "Shuffle Teams"
 
-module.exports = ui
+
+players-to-choose = ({ players, selected-players }) ->
+  div { class-name: "players-to-choose" },
+    players.map (player) ->
+      class-name = "selectable-player" unless player in selected-players
+      div { class-name: "player" },
+        img { src: player.image_url, on-click: (d \PLAYER_CHOOSE, player.id), class-name }
+
+
+module.exports = ({ players, slot1, slot2, slot3, slot4 }) ->
+  selected-players = [slot1, slot2, slot3, slot4].filter (x) -> x
+  game-can-start = selected-players.length == 4
+
+  div { class-name: "match-maker" },
+    player-slots { slot1, slot2, slot3, slot4 }
+    game-buttons { game-can-start }
+    if players?
+      players-to-choose { players, selected-players }
