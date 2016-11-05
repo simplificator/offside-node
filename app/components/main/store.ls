@@ -13,11 +13,11 @@ game-state =
   match:
     running:false
     red:
-      team: []
-      score: 0
+      players: []
+      goals: 0
     blue:
-      team: []
-      score: 0
+      players: []
+      goals: 0
 
 
 update-state = (state, { type, payload }) ->

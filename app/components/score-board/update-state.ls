@@ -1,6 +1,6 @@
 goal = (state, team) ->
   if state.match.running
-    state.match[team].score = state.match[team].score + 1
+    state.match["team-#{team}"].goals++
   state
 
 end-game = (state) ->
@@ -11,11 +11,11 @@ end-game = (state) ->
   state.match =
     running:false
     red:
-      team: []
-      score: 0
+      players: []
+      goals: 0
     blue:
-      team: []
-      score: 0
+      players: []
+      goals: 0
   state
 
 module.exports = (state, { type, payload }) ->

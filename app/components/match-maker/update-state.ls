@@ -24,8 +24,8 @@ free-slot = (state, slot-id) ->
 start-game = (state) ->
   player-count = (get-selected-players state).length
   if player-count == 4
-    state.match.red.team = [state.slot1, state.slot2]
-    state.match.blue.team = [state.slot3, state.slot4]
+    state.match.red.players = [state.slot1, state.slot2]
+    state.match.blue.players = [state.slot3, state.slot4]
     state.match.running = true
   state
 
