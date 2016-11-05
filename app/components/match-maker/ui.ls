@@ -1,11 +1,20 @@
 React = require \react
+Rx = require \rx
+Rx-DOM = require \rx-dom
+
 { h1, div, ul, li, img, a } = React.DOM
 
 store = require "../main/store.ls"
-
 kicker-image = require "./field-img-white.png"
 
 require "./style.scss"
+
+Rx.DOM
+  .ajax "/players"
+  .subscribe ({ response }) ->
+    store.dispatch do
+      type: \PLAYERS_SET
+      payload: (JSON.parse response).filter (p) -> p.image_url
 
 
 ui = ({ players, slot1, slot2, slot3, slot4 }) ->
@@ -35,11 +44,11 @@ game-buttons = ({ slots }) ->
 
 
 dispatch-game-start = ->
-  store.dispatch type: \start-game
+  store.dispatch type: \GAME_START
 
 
 dispatch-shuffle-players = ->
-  store.dispatch type: \shuffle-players
+  store.dispatch type: \PLAYERS_SHUFFLE
 
 
 player-chooser = ({ players, selected-players }) ->
@@ -53,7 +62,7 @@ player-chooser = ({ players, selected-players }) ->
 dispatch-select-player = (player) ->
   ->
     store.dispatch do
-      type: \set-player
+      type: \PLAYER_CHOOSE
       payload: player.id
 
 
@@ -72,7 +81,7 @@ player-slot = ({ id, player }) ->
 dispatch-free-slot = (id) ->
   ->
     store.dispatch do
-      type: \free-slot
+      type: \SLOT_FREE
       payload: "slot#{id}"
 
 module.exports = ui

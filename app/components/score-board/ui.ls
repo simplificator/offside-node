@@ -1,9 +1,18 @@
 React = require \react
+io = require "socket.io-client"
+
 { h1, div, ul, li, img, a } = React.DOM
 
 store = require "../main/store.ls"
 
 require "./style.scss"
+
+socket = io!
+
+socket.on "goal", ({ team }) ->
+  store.dispatch do
+    type: \GOAL_ADD
+    payload: team
 
 
 ui = ({ red, blue }) ->
@@ -22,7 +31,7 @@ ui = ({ red, blue }) ->
 
 dispatch-end-game = ->
   store.dispatch do
-    type: \end-game
+    type: \GAME_END
 
 
 score = ({ count }) ->
