@@ -31,11 +31,15 @@ game-buttons = ({ slots }) ->
   class-name = "button #{'active' if (slots.filter (x) -> x).length == 4}"
   div { class-name: "game-buttons" },
     a { class-name, on-click: dispatch-game-start }, "Start Game"
-    a { class-name }, "Shuffle Teams"
+    a { class-name, on-click: dispatch-shuffle-players }, "Shuffle Teams"
 
 
 dispatch-game-start = ->
   store.dispatch type: \start-game
+
+
+dispatch-shuffle-players = ->
+  store.dispatch type: \shuffle-players
 
 
 player-chooser = ({ players, selected-players }) ->

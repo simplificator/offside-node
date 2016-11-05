@@ -4,9 +4,15 @@ New new kicker app in node
 
 # TODO
 
-- add redux
-- add game win detection
-- add end game functionality
++ add end game functionality
++ add redux
+  - rename actions
+  - add a reducer per component
+  - extract store from main / reducers
+  - make store data immutable
+- match-maker: add team shuffle
+- score-board: add game win detection
+- score-board: add score manipulation functionality
 - add guest players
 - add sound effects
 - add some basic animations

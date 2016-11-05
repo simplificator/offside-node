@@ -18,27 +18,36 @@ game-state =
 
 update-state = (state, { type, payload }) ->
   switch type
-    case \get-players
-      state.players = payload
-      state
-    case \set-player
-      player-id = payload
-      slot = find-available-slot state
-      state[slot] = state.players.find (p) -> p.id == +player-id
-      state
-    case \free-slot
-      slot-id = payload
-      state[slot-id] = undefined
-      state
+    case \get-players then get-players state, payload
+    case \set-player then set-player state, payload
+    case \shuffle-players then shuffle-players state
+    case \free-slot then free-slot state, payload
     case \start-game then start-game state
-    case \goal
-      if state.game.running
-        team = payload
-        state.match[team].score = state.match[team].score + 1
-      state
+    case \goal then goal state, payload
     case \end-game then end-game state
     default state
 
+
+get-players = (state, players) ->
+  state.players = players
+  state
+
+set-player = (state, player-id) ->
+  slot = find-available-slot state
+  state[slot] = state.players.find (p) -> p.id == +player-id
+  state
+
+shuffle-players = (state) ->
+  { slot1, slot2, slot3, slot4 } = state
+  state.slot1 = slot4
+  state.slot2 = slot3
+  state.slot3 = slot1
+  state.slot4 = slot2
+  state
+
+free-slot = (state, slot-id) ->
+  state[slot-id] = undefined
+  state
 
 start-game = (state) ->
   { slot1, slot2, slot3, slot4 } = state
@@ -49,6 +58,10 @@ start-game = (state) ->
     state.match.running = true
   state
 
+goal = (state, team) ->
+  if state.match.running
+    state.match[team].score = state.match[team].score + 1
+  state
 
 end-game = (state) ->
   state.slot1 = undefined
