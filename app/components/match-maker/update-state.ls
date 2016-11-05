@@ -3,8 +3,10 @@ get-players = (state, players) ->
   state
 
 set-player = (state, player-id) ->
-  slot = find-available-slot state
-  state[slot] = state.players.find (p) -> p.id == +player-id
+  player = state.players.find (p) -> p.id == +player-id
+  unless player in get-selected-players state
+    slot = find-available-slot state
+    state[slot] = state.players.find (p) -> p.id == +player-id
   state
 
 shuffle-players = (state) ->
@@ -20,13 +22,16 @@ free-slot = (state, slot-id) ->
   state
 
 start-game = (state) ->
-  { slot1, slot2, slot3, slot4 } = state
-  player-count = ([slot1, slot2, slot3, slot4].filter (x) -> x).length
+  player-count = (get-selected-players state).length
   if player-count == 4
     state.match.red.team = [state.slot1, state.slot2]
     state.match.blue.team = [state.slot3, state.slot4]
     state.match.running = true
   state
+
+get-selected-players = (state) ->
+  { slot1, slot2, slot3, slot4 } = state
+  [slot1, slot2, slot3, slot4].filter (x) -> x
 
 find-available-slot = (state) ->
   "slot" + [1 to 4].find (i) ->
