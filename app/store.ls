@@ -12,12 +12,13 @@ game-state =
   slot4: undefined
   match:
     running:false
+    goals: []
     red:
       players: []
-      goals: 0
+      score: 0
     blue:
       players: []
-      goals: 0
+      score: 0
 
 
 update-state = (state, { type, payload }) ->

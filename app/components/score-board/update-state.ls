@@ -1,16 +1,16 @@
 
 
 goal-up = (state, team) ->
-  set-score state, team, state.match[team].goals + 1
+  set-score state, team, state.match[team].score + 1
 
 
 goal-down = (state, team) ->
-  set-score state, team, state.match[team].goals - 1
+  set-score state, team, state.match[team].score - 1
 
 
 set-score = (state, team, score) ->
   if state.match.running && score >= 0 && score <= 8
-    state.match[team].goals = score
+    state.match[team].score = score
   state
 
 
@@ -21,12 +21,13 @@ end-game = (state) ->
   state.slot4 = undefined
   state.match =
     running:false
+    goals: []
     red:
       players: []
-      goals: 0
+      score: 0
     blue:
       players: []
-      goals: 0
+      score: 0
   state
 
 

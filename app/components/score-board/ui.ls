@@ -42,10 +42,10 @@ module.exports = ({ red, blue }) ->
   div {},
     div { class-name: "score-board" },
       div { class-name: "red-side" },
-        score { goals: red.goals, team: "red" }
+        score { goals: red.score, team: "red" }
         players { players: red.players }
       div { class-name: "seperator" }
       div { class-name: "blue-side" },
-        score { goals: blue.goals, team: "blue" }
+        score { goals: blue.score, team: "blue" }
         players { players: blue.players }
     buttons {}
