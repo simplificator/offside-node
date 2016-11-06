@@ -15,8 +15,16 @@ socket.on "goal", ({ team }) ->
     payload: team
 
 
-score = ({ goals }) ->
-  div { class-name: "score-count" }, goals
+score = ({ goals, team }) ->
+  div { class-name: "score" },
+    div { class-name: "score-manipulator" },
+      a { on-click: -> dispatch type: \GOAL_UP, payload: team }, "+"
+    div { class-name: "score-count" },
+      div { id: "count-#{goals}"},
+        [0 to 8].map (i) ->
+          div {}, i
+    div { class-name: "score-manipulator" },
+      a { on-click: -> dispatch type: \GOAL_DOWN, payload: team }, "-"
 
 
 players = ({ players }) ->
@@ -34,10 +42,10 @@ module.exports = ({ red, blue }) ->
   div {},
     div { class-name: "score-board" },
       div { class-name: "red-side" },
-        score { goals: red.goals }
+        score { goals: red.goals, team: "red" }
         players { players: red.players }
       div { class-name: "seperator" }
       div { class-name: "blue-side" },
-        score { goals: blue.goals }
+        score { goals: blue.goals, team: "blue" }
         players { players: blue.players }
     buttons {}

@@ -29,6 +29,8 @@ update-state = (state, { type, payload }) ->
         ,\GAME_START
           match-maker-update-state ...
     case \GOAL_ADD
+        ,\GOAL_UP
+        ,\GOAL_DOWN
         ,\GAME_END
           score-board-update-state ...
     default state
