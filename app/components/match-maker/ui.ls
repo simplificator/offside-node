@@ -2,7 +2,7 @@ React = require \react
 Rx = require \rx
 Rx-DOM = require \rx-dom
 
-store = require "../main/store.ls"
+store = require "../../store.ls"
 require "./style.scss"
 
 { h1, div, ul, li, img, a } = React.DOM

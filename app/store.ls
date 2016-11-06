@@ -1,7 +1,7 @@
 { create-store } = require \redux
 
-match-maker-update-state = require "../match-maker/update-state.ls"
-score-board-update-state = require "../score-board/update-state.ls"
+match-maker-update-state = require "./components/match-maker/update-state.ls"
+score-board-update-state = require "./components/score-board/update-state.ls"
 
 
 game-state =

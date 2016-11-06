@@ -1,6 +1,6 @@
 React-DOM = require \react-dom
 
-store = require "./components/main/store.ls"
+store = require "./store.ls"
 main-component = require "./components/main/ui.ls"
 
 store.subscribe ->

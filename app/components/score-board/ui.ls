@@ -3,7 +3,7 @@ io = require "socket.io-client"
 
 { h1, div, ul, li, img, a } = React.DOM
 
-{ dispatch } = require "../main/store.ls"
+{ dispatch } = require "../../store.ls"
 
 require "./style.scss"
 
