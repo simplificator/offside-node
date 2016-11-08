@@ -12,6 +12,10 @@ html {
   box-shadow: inset 0 0 163px 57px rgba(0, 0, 0, 0.2);
 }
 
+a, .button {
+  cursor: pointer;
+}
+
 .button {
   color: white;
   padding: 10px 5px;

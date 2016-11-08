@@ -15,5 +15,5 @@ module.exports = {
       { test: /\.(png|mp3)$/, loader: 'url-loader' }
     ]
   },
-  postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ]
+  postcss: [ autoprefixer({ browsers: ['last 4 versions'] }) ]
 }

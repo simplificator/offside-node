@@ -7,6 +7,8 @@ demo: https://offside-kicker-manager.herokuapp.com/
 ## general
 
 - [x] add redux
+- [ ] use duck schema for redux
+- [ ] add tests with jest
 - [x] rename actions
 - [x] add a reducer per component
 - [x] extract store from main / reducers
