@@ -60,12 +60,12 @@
 
 .players-to-choose {
   div {
+    cursor: pointer;
     display: inline-block;
     margin: 10px;
   }
 
   img {
-    cursor: pointer;
     border-radius: 45px;
     width: 80px;
     height: 80px;

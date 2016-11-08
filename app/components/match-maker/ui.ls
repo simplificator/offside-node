@@ -52,8 +52,8 @@ players-to-choose = ({ players, selected-players }) ->
   div { class-name: "players-to-choose" },
     players.map (player) ->
       class-name = "selectable-player" unless player in selected-players
-      div { class-name: "player" },
-        img { src: player.image_url, on-click: (d \PLAYER_CHOOSE, player.id), class-name }
+      div { on-click: (d \PLAYER_CHOOSE, player.id) },
+        img { src: player.image_url, class-name }
 
 
 module.exports = ({ players, slot1, slot2, slot3, slot4 }) ->
