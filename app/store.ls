@@ -1,40 +1,11 @@
-{ create-store } = require \redux
+{ create-store, combine-reducers } = require \redux
 
-match-maker-update-state = require "./components/match-maker/update-state.ls"
-score-board-update-state = require "./components/score-board/update-state.ls"
+match-maker = require "./components/match-maker/update-state.ls"
+score-board = require "./components/score-board/update-state.ls"
 
+reducer = combine-reducers {
+  match-maker,
+  score-board
+}
 
-game-state =
-  players: []
-  slot1: undefined
-  slot2: undefined
-  slot3: undefined
-  slot4: undefined
-  match:
-    running:false
-    goals: []
-    red:
-      players: []
-      score: 0
-    blue:
-      players: []
-      score: 0
-
-
-update-state = (state, { type, payload }) ->
-  switch type
-    case \PLAYERS_SET
-        ,\PLAYER_CHOOSE
-        ,\PLAYERS_SHUFFLE
-        ,\SLOT_FREE
-        ,\GAME_START
-          match-maker-update-state ...
-    case \GOAL_ADD
-        ,\GOAL_UP
-        ,\GOAL_DOWN
-        ,\GAME_END
-          score-board-update-state ...
-    default state
-
-
-module.exports = create-store update-state, game-state
+module.exports = create-store reducer

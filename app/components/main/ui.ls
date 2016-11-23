@@ -1,13 +1,13 @@
 React = require \react
 { div } = React.DOM
 
-match-maker = require "../match-maker/ui.ls"
-score-board = require "../score-board/ui.ls"
+match-maker-ui = require "../match-maker/ui.ls"
+score-board-ui = require "../score-board/ui.ls"
 
 require "./style.scss"
 
-module.exports = (props) ->
+module.exports = ({ match-maker, score-board }) ->
   div {},
-    match-maker props
-    if props.match.running
-      score-board props.match
+    match-maker-ui match-maker
+    if score-board.running
+      score-board-ui score-board

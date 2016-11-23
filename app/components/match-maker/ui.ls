@@ -21,6 +21,11 @@ d = (type, payload) ->
     store.dispatch { type, payload }
 
 
+d-start-game = (payload) ->
+  ->
+    store.dispatch { type: \GAME_START, payload }
+
+
 player-slots = ({ slot1, slot2, slot3, slot4 }) ->
   div { class-name: "player-slots" },
     div { class-name: "team-red" },
@@ -41,11 +46,11 @@ slot = ({ id, player }) ->
       id
 
 
-game-buttons = ({ game-can-start }) ->
+game-buttons = ({ game-can-start, slot1, slot2, slot3, slot4 }) ->
   class-name = if game-can-start then "button active" else "button"
   div { class-name: "game-buttons" },
-    a { class-name, on-click: d \GAME_START }, "Start Game"
-    a { class-name, on-click: d \PLAYERS_SHUFFLE }, "Shuffle Teams"
+    a { class-name, on-click: d-start-game { slot1, slot2, slot3, slot4 } }, "Start Game"
+    a { class-name }, "Shuffle Teams"
 
 
 players-to-choose = ({ players, selected-players }) ->
@@ -62,6 +67,6 @@ module.exports = ({ players, slot1, slot2, slot3, slot4 }) ->
 
   div { class-name: "match-maker" },
     player-slots { slot1, slot2, slot3, slot4 }
-    game-buttons { game-can-start }
+    game-buttons { game-can-start, slot1, slot2, slot3, slot4 }
     if players?
       players-to-choose { players, selected-players }

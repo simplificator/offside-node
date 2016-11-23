@@ -1,9 +1,15 @@
 choose-player-sound = require "../../sounds/choose-player.mp3"
 
+initial-state =
+  players: []
+  slot1: undefined
+  slot2: undefined
+  slot3: undefined
+  slot4: undefined
+
 
 get-players = (state, players) ->
-  state.players = players
-  state
+  { ...state, players }
 
 
 choose-player = (state, player-id) ->
@@ -12,32 +18,28 @@ choose-player = (state, player-id) ->
 
   unless !slot || player in get-selected-players state
     (new Audio choose-player-sound).play!
-    state[slot] = state.players.find (p) -> p.id == +player-id
+    { ...state, "#slot": player }
+  else
+    state
 
-  state
 
-
+# TODO: do this properly
 shuffle-players = (state) ->
-  { slot1, slot2, slot3, slot4 } = state
-  state.slot1 = slot4
-  state.slot2 = slot3
-  state.slot3 = slot1
-  state.slot4 = slot2
   state
 
 
 free-slot = (state, slot-id) ->
-  state[slot-id] = undefined
-  state
+  { ...state, "#slot-id": undefined }
 
 
-start-game = (state) ->
-  player-count = (get-selected-players state).length
-  if player-count == 4
-    state.match.red.players = [state.slot1, state.slot2]
-    state.match.blue.players = [state.slot3, state.slot4]
-    state.match.running = true
-  state
+end-game = (state) ->
+  {
+    ...state
+    slot1: undefined
+    slot2: undefined
+    slot3: undefined
+    slot4: undefined
+  }
 
 
 get-selected-players = (state) ->
@@ -50,11 +52,11 @@ find-available-slot = (state) ->
   "slot#{id}" if id
 
 
-module.exports = (state, { type, payload }) ->
+module.exports = (state = initial-state, { type, payload }) ->
   switch type
     case \PLAYERS_SET then get-players state, payload
     case \PLAYER_CHOOSE then choose-player state, payload
     case \PLAYERS_SHUFFLE then shuffle-players state
     case \SLOT_FREE then free-slot state, payload
-    case \GAME_START then start-game state
+    case \GAME_END then end-game state
     default state
