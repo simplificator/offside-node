@@ -6,8 +6,7 @@ score-board-ui = require "../score-board/ui.ls"
 
 require "./style.scss"
 
-module.exports = ({ match-maker, score-board }) ->
+module.exports = ->
   div {},
-    match-maker-ui match-maker
-    if score-board.running
-      score-board-ui score-board
+    match-maker-ui {}
+    score-board-ui {}

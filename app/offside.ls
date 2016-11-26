@@ -1,13 +1,22 @@
-React-DOM = require \react-dom
-{ create-store, combine-reducers } = require \redux
+React = require \react
+{ render } = require \react-dom
+{ Provider } = require \react-redux
 
-
-match-maker = require "./components/match-maker/update-state.ls"
-score-board = require "./components/score-board/update-state.ls"
-main-component = require "./components/main/ui.ls"
-
+App = require "./components/main/ui.ls"
 store = require "./store.ls"
 
-store.subscribe ->
-  ui = main-component store.get-state!
-  React-DOM.render ui, document.get-element-by-id \offside
+
+
+ui = React.create-element Provider, { store: store }, App {}
+render ui, document.get-element-by-id \offside
+
+
+# TODO: refactor this
+Rx = require \rx
+Rx-DOM = require \rx-dom
+Rx.DOM
+  .ajax "/players"
+  .subscribe ({ response }) ->
+    store.dispatch do
+      type: \PLAYERS_SET
+      players: (JSON.parse response).filter (p) -> p.image_url

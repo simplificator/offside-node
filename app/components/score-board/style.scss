@@ -4,90 +4,95 @@
   left: 0;
   bottom: 0;
   right: 0;
-  display: flex;
   background-color: white;
-}
 
-.red-side {
-  flex: 1;
-  background-color: #f1272d ;
-}
-
-.seperator {
-  width: 3px;
-  background-color: white;
-}
-
-.blue-side {
-  flex: 1;
-  background-color: #1a73b1 ;
-}
-
-.score {
-  a {
-    padding: 20px;
-  }
-}
-
-.score-manipulator {
-  text-align: center;
-  color: white;
-}
-
-.score-count {
-  position: relative;
-  overflow: hidden;
-  height: 300px;
-  color: white;
-  font-size: 284px;
-  font-weight: bolder;
-  text-align: center;
-
-  > div {
-    position: absolute;
+  .board {
     display: flex;
-    flex-direction: column-reverse;
-    width: 100%;
-    transition: all 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
 
-    > div {
-      height: 300px;
+  .red-side {
+    flex: 1;
+    background-color: #f1272d ;
+  }
+
+  .seperator {
+    width: 3px;
+    background-color: white;
+  }
+
+  .blue-side {
+    flex: 1;
+    background-color: #1a73b1 ;
+  }
+
+  .score {
+    a {
+      padding: 20px;
     }
   }
 
-  #count-0 { top: -#{8 * 300}px; }
-  #count-1 { top: -#{7 * 300}px; }
-  #count-2 { top: -#{6 * 300}px; }
-  #count-3 { top: -#{5 * 300}px; }
-  #count-4 { top: -#{4 * 300}px; }
-  #count-5 { top: -#{3 * 300}px; }
-  #count-6 { top: -#{2 * 300}px; }
-  #count-7 { top: -#{1 * 300}px; }
-  #count-8 { top: -#{0 * 300}px; }
-}
-
-.score-buttons {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  text-align: center;
-
-  a {
-    margin: auto;
+  .score-manipulator {
+    text-align: center;
+    color: white;
   }
-}
 
-.team {
-  text-align: center;
-}
+  .score-count {
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+    color: white;
+    font-size: 284px;
+    font-weight: bolder;
+    text-align: center;
 
-img.player-icon {
-  display: block;
-  margin: 20px auto;
-  border-radius: 50px;
-  width: 100px;
-  height: 100px;
-  border: 3px solid #dadada;
+    > div {
+      position: absolute;
+      display: flex;
+      flex-direction: column-reverse;
+      width: 100%;
+      transition: all 400ms cubic-bezier(0.645, 0.045, 0.355, 1);
+
+      > div {
+        height: 300px;
+      }
+    }
+
+    #count-0 { top: -#{8 * 300}px; }
+    #count-1 { top: -#{7 * 300}px; }
+    #count-2 { top: -#{6 * 300}px; }
+    #count-3 { top: -#{5 * 300}px; }
+    #count-4 { top: -#{4 * 300}px; }
+    #count-5 { top: -#{3 * 300}px; }
+    #count-6 { top: -#{2 * 300}px; }
+    #count-7 { top: -#{1 * 300}px; }
+    #count-8 { top: -#{0 * 300}px; }
+  }
+
+  .score-buttons {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    text-align: center;
+
+    a {
+      margin: auto;
+    }
+  }
+
+  .team {
+    text-align: center;
+  }
+
+  img.player-icon {
+    display: block;
+    margin: 20px auto;
+    border-radius: 50px;
+    width: 100px;
+    height: 100px;
+    border: 3px solid #dadada;
+  }
+
+
 }

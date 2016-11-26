@@ -8,7 +8,7 @@ initial-state =
   slot4: undefined
 
 
-get-players = (state, players) ->
+set-players = (state, players) ->
   { ...state, players }
 
 
@@ -52,11 +52,11 @@ find-available-slot = (state) ->
   "slot#{id}" if id
 
 
-module.exports = (state = initial-state, { type, payload }) ->
-  switch type
-    case \PLAYERS_SET then get-players state, payload
-    case \PLAYER_CHOOSE then choose-player state, payload
+module.exports = (state = initial-state, action) ->
+  switch action.type
+    case \PLAYERS_SET then set-players state, action.players
+    case \PLAYER_CHOOSE then choose-player state, action.id
     case \PLAYERS_SHUFFLE then shuffle-players state
-    case \SLOT_FREE then free-slot state, payload
+    case \SLOT_FREE then free-slot state, action.id
     case \GAME_END then end-game state
     default state

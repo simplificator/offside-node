@@ -42,11 +42,11 @@ end-game = (state) ->
   initial-state
 
 
-module.exports = (state = initial-state, { type, payload }) ->
-  switch type
-    case \GOAL_ADD then goal-up state, payload
-    case \GOAL_UP then goal-up state, payload
-    case \GOAL_DOWN then goal-down state, payload
-    case \GAME_START then start-game state, payload
-    case \GAME_END then end-game state, payload
+module.exports = (state = initial-state, action) ->
+  switch action.type
+    case \GOAL_ADD then goal-up state, action.team
+    case \GOAL_UP then goal-up state, action.team
+    case \GOAL_DOWN then goal-down state, action.team
+    case \GAME_START then start-game state, action.players
+    case \GAME_END then end-game state
     default state
