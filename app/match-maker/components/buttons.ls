@@ -15,7 +15,7 @@ map-state-to-props = ({ match-maker: { players, slot1, slot2, slot3, slot4 }}) -
 
 
 map-dispatch-to-props = (dispatch) ->
-  on-start-click: (players) -> dispatch { type: \GAME_START, players }
+  on-start-click: (players) -> dispatch { type: \GAME_START_TRIGGER, players }
 
 
 module.exports = do
