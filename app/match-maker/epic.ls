@@ -2,6 +2,19 @@
 { combine-epics } = require \redux-observable
 
 
+fetch-players = (action$) ->
+  action$
+    .of-type \FETCH_PLAYERS
+    .switch-map ->
+      Observable
+        .ajax
+        .get "/players"
+        .retry 5
+        .map ({ response }) ->
+          players = response.filter (p) -> p.image_url
+          { type: \PLAYERS_SET, players }
+
+
 play-coin-sound = (action$) ->
   action$
     .of-type \PLAYER_CHOOSE
@@ -19,4 +32,4 @@ game-start-animation = (action$) ->
           { type, players }
 
 
-module.exports = combine-epics play-coin-sound, game-start-animation
+module.exports = combine-epics play-coin-sound, game-start-animation, fetch-players
