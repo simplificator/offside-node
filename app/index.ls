@@ -1,13 +1,18 @@
+{ create-store, apply-middleware } = require \redux
 { create-element } = require \react
 { render } = require \react-dom
 { Provider } = require \react-redux
-
+{ create-epic-middleware } = require \redux-observable
 
 App = require "./ui.ls"
-store = require "./store.ls"
+reducer = require "./reducer.ls"
+epic = require "./match-maker/epic.ls"
 
-
+epic-middleware = create-epic-middleware epic
+store = create-store reducer, apply-middleware epic-middleware
 ui = create-element Provider, { store }, App {}
+
+
 render ui, document.get-element-by-id \offside
 
 
