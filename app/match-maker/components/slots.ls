@@ -1,6 +1,8 @@
 { connect } = require \react-redux
 { div, img } = (require \react).DOM
 
+field-img = require "../assets/field-img-white.png"
+
 
 slots = ({ slot1, slot2, slot3, slot4, on-slot-click }) ->
   div { class-name: "player-slots" },
@@ -8,7 +10,7 @@ slots = ({ slot1, slot2, slot3, slot4, on-slot-click }) ->
       slot { id:1, player:slot1, on-slot-click }
       slot { id:2, player:slot2, on-slot-click }
     div { class-name: "field"},
-      img { src: require "./field-img-white.png" }
+      img { src: field-img }
     div { class-name: "team-blue" },
       slot { id:3, player:slot3, on-slot-click }
       slot { id:4, player:slot4, on-slot-click }

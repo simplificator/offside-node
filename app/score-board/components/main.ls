@@ -1,6 +1,6 @@
-React = require \react
+{ create-element, DOM } = require \react
 { connect } = require \react-redux
-{ div } = React.DOM
+{ div } = DOM
 
 score = require "./score.ls"
 buttons = require "./buttons.ls"
@@ -13,8 +13,8 @@ ui = ({ running }) ->
     div {}
   else
     div { class-name: "score-board" },
-      React.create-element score, {}
-      React.create-element buttons, {}
+      create-element score, {}
+      create-element buttons, {}
 
 
 map-state-to-props = ({ score-board: { running } }) ->
@@ -27,4 +27,4 @@ enhanced-ui = do
 
 module.exports = ->
   div {},
-    React.create-element enhanced-ui, {}
+    create-element enhanced-ui, {}

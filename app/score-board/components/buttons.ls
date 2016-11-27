@@ -4,7 +4,7 @@
 
 buttons = ({ on-end-click }) ->
   div { class-name: "score-buttons" },
-    a { class-name: "button active", on-click: -> on-end-click }, "end game"
+    a { class-name: "button active", on-click: -> on-end-click! }, "end game"
 
 
 map-dispatch-to-props = (dispatch) ->

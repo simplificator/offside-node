@@ -2,7 +2,7 @@ autoprefixer = require("autoprefixer")
 
 module.exports = {
   entry: {
-    "app/offside": "./app/offside.ls"
+    "app/index": "./app/index.ls"
   },
   output: {
     path: __dirname,

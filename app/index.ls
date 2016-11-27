@@ -1,13 +1,13 @@
-React = require \react
+{ create-element } = require \react
 { render } = require \react-dom
 { Provider } = require \react-redux
 
-App = require "./components/main/ui.ls"
+
+App = require "./ui.ls"
 store = require "./store.ls"
 
 
-
-ui = React.create-element Provider, { store: store }, App {}
+ui = create-element Provider, { store }, App {}
 render ui, document.get-element-by-id \offside
 
 

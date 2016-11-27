@@ -1,4 +1,4 @@
-choose-player-sound = require "../../sounds/choose-player.mp3"
+choose-player-sound = require "./assets/choose-player.mp3"
 
 initial-state =
   players: []

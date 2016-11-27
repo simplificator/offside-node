@@ -1,4 +1,3 @@
-
 initial-state =
   running:false
   goals: []
@@ -38,7 +37,7 @@ start-game = (state, { slot1, slot2, slot3, slot4 }) ->
   }
 
 
-end-game = (state) ->
+end-game = ->
   initial-state
 
 
