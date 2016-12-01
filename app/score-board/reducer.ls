@@ -1,39 +1,61 @@
 initial-state =
-  running:false
+  running: false
+  team1:
+    players: []
+    rounds-won: 0
+  team2:
+    players: []
+    rounds-won: 0
+  rounds: []
+  current-score: undefined
+
+initial-score =
   goals: []
-  red:
-    players: []
+  team1:
+    side: "red"
     score: 0
-  blue:
-    players: []
+  team2:
+    side: "blue"
     score: 0
 
 
-goal-up = (state, team) ->
-  set-score state, team, state[team].score + 1
+goal-up = (state, side) ->
+  update-score state, side, +1
 
 
-goal-down = (state, team) ->
-  set-score state, team, state[team].score - 1
+goal-down = (state, side) ->
+  update-score state, side, -1
 
 
-set-score = (state, team, score) ->
-  if state.running && score >= 0 && score <= 8
-    { ...state, "#team": { ...state[team], score } }
+find-team-by-side = (current-score, side) ->
+  current-score.team1.side == side && "team1" || "team2"
+
+
+update-score = (state, side, delta-value) ->
+  if state.running
+    team = find-team-by-side state.current-score, side
+    score = enforce-score-boundaries <| state.current-score[team].score + delta-value
+    current-score = { ...state.current-score, "#team": { ...state[team], score } }
+    { ...state, current-score }
   else
     state
+
+
+enforce-score-boundaries = (score) ->
+  Math.min 8, Math.max 0, score
 
 
 start-game = (state, { slot1, slot2, slot3, slot4 }) ->
   {
     ...initial-state
     running: true
-    red:
+    team1:
       players: [slot1, slot2]
-      score: 0
-    blue:
+      rounds-won: 0
+    team2:
       players: [slot3, slot4]
-      score: 0
+      rounds-won: 0
+    current-score: initial-score
   }
 
 

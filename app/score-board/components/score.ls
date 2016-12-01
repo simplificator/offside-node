@@ -23,15 +23,28 @@ team-score = ({ color, team, on-up-click, on-down-click }) ->
     players { players: team.players }
 
 
-score = ({ red, blue, on-up-click, on-down-click }) ->
+score = ({ red, blue, team1, team2, on-up-click, on-down-click }) ->
   div { class-name: "board" },
     team-score { team: red, color: "red", on-up-click, on-down-click  }
     div { class-name: "seperator" }
     team-score { team: blue, color: "blue", on-up-click, on-down-click  }
 
 
-map-state-to-props = ({ score-board: { red, blue }}) ->
-  { red, blue }
+map-state-to-props = ({ score-board: { current-score }:score-board }) ->
+  team-red = find-team-by-side current-score, "red"
+  team-blue = find-team-by-side current-score, "blue"
+
+  returns =
+    red:
+      score: current-score[team-red].score
+      players: score-board[team-red].players
+    blue:
+      score: current-score[team-blue].score
+      players: score-board[team-blue].players
+
+
+find-team-by-side = (current-score, side) ->
+  current-score.team1.side == side && "team1" || "team2"
 
 
 map-dispatch-to-props = (dispatch) ->
