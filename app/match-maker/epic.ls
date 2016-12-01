@@ -15,10 +15,10 @@ fetch-players = (action$) ->
           { type: \PLAYERS_SET, players }
 
 
-play-coin-sound = (action$) ->
+player-chosen-sound = (action$) ->
   action$
     .of-type \PLAYER_CHOOSE
-    .map-to { type: \SOUND_COIN }
+    .map-to { type: \SOUND_PLAYER_CHOSEN }
 
 
 game-start-animation = (action$) ->
@@ -26,10 +26,11 @@ game-start-animation = (action$) ->
     .of-type \GAME_START_TRIGGER
     .switch-map ({ players }) ->
       Observable
-        .from [\GAME_STARTS_IN_3, \GAME_STARTS_IN_2, \GAME_STARTS_IN_1, \GAME_START]
-        .zip (Observable.interval 600), (a, b) -> a
+        .from [\GAME_STARTS_IN_2, \GAME_STARTS_IN_1, \GAME_START]
+        .zip (Observable.interval 800), (a, b) -> a
+        .start-with \GAME_STARTS_IN_3
         .map (type) ->
           { type, players }
 
 
-module.exports = combine-epics play-coin-sound, game-start-animation, fetch-players
+module.exports = combine-epics player-chosen-sound, game-start-animation, fetch-players

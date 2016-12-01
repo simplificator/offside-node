@@ -1,81 +1,93 @@
 .match-maker {
   display: flex;
   flex-direction: column;
-}
 
-.player-slots {
-  display: flex;
-  width: 100%;
+  .game-start-screen {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.3);
 
-  > div {
-    flex: 1;
-    flex-direction: column;
+    font-size: 55pt;
+    color: black;
+  }
 
+  .player-slots {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+
+    > div {
+      flex: 1;
+      flex-direction: column;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slot {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 100px;
+      height: 100px;
+      margin: 30px auto;
+
+      font-size: 30pt;
+      color: white;
+
+      border-radius: 60px;
+      border: 3px solid #dadada;
+    }
+
+    .team-red > .slot {
+      background-color: #f1272d;
+    }
+
+    .team-blue > .slot {
+      background-color: #1a73b1;
+    }
+
+    .field > img {
+      width: 180px;
+    }
+
+    .slot > img {
+      cursor: pointer;
+      border-radius: 50px;
+      width: 100px;
+      height: 100px;
+      border: 3px solid #dadada;
+    }
   }
 
-  .slot {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 100px;
-    height: 100px;
-    margin: 30px auto;
-
-    font-size: 30pt;
-    color: white;
-
-    border-radius: 60px;
-    border: 3px solid #dadada;
+  .game-buttons {
+    text-align: center;
+    margin: 20px;
   }
 
-  .team-red > .slot {
-    background-color: #f1272d;
-  }
+  .players-to-choose {
+    text-align: center;
 
-  .team-blue > .slot {
-    background-color: #1a73b1;
-  }
+    div {
+      cursor: pointer;
+      display: inline-block;
+      margin: 10px;
+    }
 
-  .field > img {
-    width: 180px;
-  }
+    img {
+      border-radius: 45px;
+      width: 80px;
+      height: 80px;
+      border: 2px solid #dadada;
+      opacity: 0.4;
+    }
 
-  .slot > img {
-    cursor: pointer;
-    border-radius: 50px;
-    width: 100px;
-    height: 100px;
-    border: 3px solid #dadada;
-  }
-}
-
-.game-buttons {
-  text-align: center;
-  margin: 20px;
-}
-
-.players-to-choose {
-  text-align: center;
-
-  div {
-    cursor: pointer;
-    display: inline-block;
-    margin: 10px;
-  }
-
-  img {
-    border-radius: 45px;
-    width: 80px;
-    height: 80px;
-    border: 2px solid #dadada;
-    opacity: 0.4;
-  }
-
-  img.selectable-player {
-    opacity: 1;
+    img.selectable-player {
+      opacity: 1;
+    }
   }
 }

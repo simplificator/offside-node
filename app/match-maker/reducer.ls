@@ -1,4 +1,5 @@
 initial-state =
+  time-to-start: undefined
   players: []
   slot1: undefined
   slot2: undefined
@@ -32,6 +33,7 @@ free-slot = (state, slot-id) ->
 reset-slots = (state) ->
   {
     ...state
+    time-to-start: undefined
     slot1: undefined
     slot2: undefined
     slot3: undefined
@@ -49,9 +51,8 @@ find-available-slot = (state) ->
   "slot#{id}" if id
 
 
-log = (state) ->
-  console.log "this is happening"
-  state
+start-game-in = (state, time-to-start) ->
+  { ...state, time-to-start }
 
 
 module.exports = (state = initial-state, action) ->
@@ -60,8 +61,8 @@ module.exports = (state = initial-state, action) ->
     case \PLAYER_CHOOSE then choose-player state, action.id
     case \PLAYERS_SHUFFLE then shuffle-players state
     case \SLOT_FREE then free-slot state, action.id
-    case \GAME_STARTS_IN_3 then log state
-    case \GAME_STARTS_IN_2 then log state
-    case \GAME_STARTS_IN_1 then log state
+    case \GAME_STARTS_IN_3 then start-game-in state, 3
+    case \GAME_STARTS_IN_2 then start-game-in state, 2
+    case \GAME_STARTS_IN_1 then start-game-in state, 1
     case \GAME_START then reset-slots state
     default state
