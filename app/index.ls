@@ -2,13 +2,16 @@
 { create-element } = require \react
 { render } = require \react-dom
 { Provider } = require \react-redux
-{ create-epic-middleware } = require \redux-observable
+{ create-epic-middleware, combine-epics } = require \redux-observable
 
 ui = require "./ui.ls"
 reducer = require "./reducer.ls"
-epic = require "./match-maker/epic.ls"
 
-epic-middleware = create-epic-middleware epic
+mm-epic = require "./match-maker/epic.ls"
+sb-epic = require "./score-board/epic.ls"
+epics = combine-epics mm-epic, sb-epic
+
+epic-middleware = create-epic-middleware epics
 store = create-store reducer, apply-middleware epic-middleware
 app = create-element Provider, { store }, ui {}
 

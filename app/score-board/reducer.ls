@@ -10,7 +10,6 @@ initial-state =
   current-score: undefined
 
 initial-score =
-  goals: []
   team1:
     side: "red"
     score: 0
@@ -35,7 +34,7 @@ update-score = (state, side, delta-value) ->
   if state.running
     team = find-team-by-side state.current-score, side
     score = enforce-score-boundaries <| state.current-score[team].score + delta-value
-    current-score = { ...state.current-score, "#team": { ...state[team], score } }
+    current-score = { ...state.current-score, "#team": { ...state.current-score[team], score } }
     { ...state, current-score }
   else
     state
@@ -59,15 +58,32 @@ start-game = (state, { slot1, slot2, slot3, slot4 }) ->
   }
 
 
+switch-sides = ({ current-score, rounds }:state) ->
+  { team1, team2 } = current-score
+  {
+    ...state
+    rounds: [...rounds, current-score]
+    current-score:
+      team1:
+        score: 0
+        side: team2.side
+      team2:
+        score: 0
+        side: team1.side
+  }
+
+
+
 end-game = ->
   initial-state
 
 
 module.exports = (state = initial-state, action) ->
+  console.log action, state
   switch action.type
-    case \GOAL_ADD then goal-up state, action.team
     case \GOAL_UP then goal-up state, action.team
     case \GOAL_DOWN then goal-down state, action.team
     case \GAME_START then start-game state, action.players
+    case \SWITCH_SIDES then switch-sides state
     case \GAME_END then end-game state
     default state
