@@ -1,49 +1,55 @@
+MAX_GOALS = 8
+
 initial-state =
   winner: undefined
   running: false
   switch-sides-in: undefined
   team1:
     players: []
-    rounds-won: 0
   team2:
     players: []
-    rounds-won: 0
   rounds: []
   current-score: undefined
 
 initial-score =
   team1:
     side: "red"
+    goals: []
     score: 0
   team2:
     side: "blue"
+    goals: []
     score: 0
 
 
-goal-up = (state, side) ->
-  update-score state, side, +1
+goal-down = ({ current-score }:state, side) ->
+  if !state.running
+    state
+  else
+    team = find-team-by-side current-score, side
+    [...goals, invalid-goal] = current-score[team].goals
+    score = goals.length
+    team-score = { ...current-score[team], score, goals }
+    { ...state, current-score: { ...current-score, "#team": team-score } }
 
 
-goal-down = (state, side) ->
-  update-score state, side, -1
+goal-up = ({ current-score }:state, side) ->
+  if !state.running
+    state
+  else
+    team = find-team-by-side current-score, side
+    goals = [...current-score[team].goals, new Date]
+
+    if goals.length <= MAX_GOALS
+      score = goals.length
+      team-score = { ...current-score[team], score, goals }
+      { ...state, current-score: { ...current-score, "#team": team-score } }
+    else
+      state
 
 
 find-team-by-side = (current-score, side) ->
   current-score.team1.side == side && "team1" || "team2"
-
-
-update-score = (state, side, delta-value) ->
-  if state.running
-    team = find-team-by-side state.current-score, side
-    score = enforce-score-boundaries <| state.current-score[team].score + delta-value
-    current-score = { ...state.current-score, "#team": { ...state.current-score[team], score } }
-    { ...state, current-score }
-  else
-    state
-
-
-enforce-score-boundaries = (score) ->
-  Math.min 8, Math.max 0, score
 
 
 start-game = (state, { slot1, slot2, slot3, slot4 }) ->
@@ -72,11 +78,13 @@ switch-sides = ({ current-score, rounds }:state) ->
     rounds: [...rounds, current-score]
     current-score:
       team1:
-        score: 0
         side: team2.side
+        score: 0
+        goals: []
       team2:
         score: 0
         side: team1.side
+        goals: []
   }
 
 
