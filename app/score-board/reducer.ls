@@ -1,4 +1,5 @@
 initial-state =
+  winner: undefined
   running: false
   switch-sides-in: undefined
   team1:
@@ -79,6 +80,9 @@ switch-sides = ({ current-score, rounds }:state) ->
   }
 
 
+congratulate-winner = (state, winner) ->
+  { ...state, winner }
+
 
 end-game = ->
   initial-state
@@ -89,7 +93,8 @@ module.exports = (state = initial-state, action) ->
     case \GOAL_UP then goal-up state, action.team
     case \GOAL_DOWN then goal-down state, action.team
     case \GAME_START then start-game state, action.players
-    case \SWITCH_SIDES_IN then switch-sides-countdown state, action.time
+    case \SWITCH_SIDES_COUNTDOWN then switch-sides-countdown state, action.time
     case \SWITCH_SIDES then switch-sides state
+    case \CONGRATULATE_WINNER then congratulate-winner state, action.winner
     case \GAME_END then end-game state
     default state

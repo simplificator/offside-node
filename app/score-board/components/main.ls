@@ -3,6 +3,7 @@
 { div } = DOM
 
 switching-sides = require "./switching-sides.ls"
+end-screen = require "./end-screen.ls"
 score = require "./score.ls"
 buttons = require "./buttons.ls"
 
@@ -14,8 +15,9 @@ ui = ({ running }) ->
     div {}
   else
     div { class-name: "score-board" },
-      create-element switching-sides, {}
       create-element score, {}
+      create-element switching-sides, {}
+      create-element end-screen, {}
       create-element buttons, {}
 
 

@@ -2,9 +2,13 @@
 { div, a } = (require \react).DOM
 
 
-buttons = ({ on-end-click }) ->
+buttons = ({ winner, on-end-click }) ->
   div { class-name: "score-buttons" },
-    a { class-name: "button active", on-click: -> on-end-click! }, "end game"
+    a { class-name: "button active", on-click: on-end-click }, "end game"
+
+
+map-state-to-props = ({ score-board: { winner } }) ->
+  { winner }
 
 
 map-dispatch-to-props = (dispatch) ->
@@ -12,4 +16,4 @@ map-dispatch-to-props = (dispatch) ->
 
 
 module.exports = do
-  buttons |> connect null, map-dispatch-to-props
+  buttons |> connect map-state-to-props, map-dispatch-to-props
