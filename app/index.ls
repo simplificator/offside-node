@@ -13,6 +13,7 @@ epics = combine-epics mm-epic, sb-epic
 
 epic-middleware = create-epic-middleware epics
 store = create-store reducer, apply-middleware epic-middleware
+store = createStore reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), apply-middleware epic-middleware
 app = create-element Provider, { store }, ui {}
 
 

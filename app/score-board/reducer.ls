@@ -1,5 +1,6 @@
 initial-state =
   running: false
+  switch-sides-in: undefined
   team1:
     players: []
     rounds-won: 0
@@ -58,10 +59,15 @@ start-game = (state, { slot1, slot2, slot3, slot4 }) ->
   }
 
 
+switch-sides-countdown = (state, switch-sides-in) ->
+ { ...state, switch-sides-in }
+
+
 switch-sides = ({ current-score, rounds }:state) ->
   { team1, team2 } = current-score
   {
     ...state
+    switch-sides-in: undefined
     rounds: [...rounds, current-score]
     current-score:
       team1:
@@ -79,11 +85,11 @@ end-game = ->
 
 
 module.exports = (state = initial-state, action) ->
-  console.log action, state
   switch action.type
     case \GOAL_UP then goal-up state, action.team
     case \GOAL_DOWN then goal-down state, action.team
     case \GAME_START then start-game state, action.players
+    case \SWITCH_SIDES_IN then switch-sides-countdown state, action.time
     case \SWITCH_SIDES then switch-sides state
     case \GAME_END then end-game state
     default state

@@ -2,6 +2,7 @@
 { connect } = require \react-redux
 { div } = DOM
 
+switching-sides = require "./switching-sides.ls"
 score = require "./score.ls"
 buttons = require "./buttons.ls"
 
@@ -13,6 +14,7 @@ ui = ({ running }) ->
     div {}
   else
     div { class-name: "score-board" },
+      create-element switching-sides, {}
       create-element score, {}
       create-element buttons, {}
 
