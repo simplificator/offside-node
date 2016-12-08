@@ -104,5 +104,6 @@ module.exports = (state = initial-state, action) ->
     case \SWITCH_SIDES_COUNTDOWN then switch-sides-countdown state, action.time
     case \SWITCH_SIDES then switch-sides state
     case \CONGRATULATE_WINNER then congratulate-winner state, action.winner
+    case \GAME_CANCEL then end-game state
     case \GAME_END then end-game state
     default state

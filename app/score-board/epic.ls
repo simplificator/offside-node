@@ -48,4 +48,20 @@ switch-sides-countdown$ = do
     .zip (Observable.interval 1000), (a, b) -> a
 
 
-module.exports = combine-epics switch-sides
+end-game = (action$, { get-state }) ->
+  action$
+    .of-type \TRIGGER_GAME_END
+    .do ->
+      { score-board } = get-state!
+      persist-score score-board
+    .map-to { type: \GAME_END }
+
+
+persist-score = ({ team1, team2, rounds, winner }) ->
+  # TODO:
+  # somewhere start/get the pouchdb
+  # persist match data
+  # replicate db
+
+
+module.exports = combine-epics end-game, switch-sides
